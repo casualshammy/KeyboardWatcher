@@ -1,5 +1,0 @@
-syntax: regexp
-.vs/.+
-.+\.dll
-.+\.pdb
-KeyboardHook/obj/.+
