@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
 
 namespace KeyboardWatcher
 {
     [DataContract]
-    public class KeyExt : IEqualityComparer<KeyExt>
+    public class KeyExt : IEquatable<KeyExt>
     {
         // do not create smth like "public static readonly KeyExt None = new KeyExt(Keys.None);",
         // this is a class, you will get a lot of bugs with references. Use "new KeyExt(Keys.None)"
@@ -35,27 +36,6 @@ namespace KeyboardWatcher
             Shift = shift;
         }
 
-        public static bool operator ==(KeyExt a, KeyExt b)
-        {
-            return a.Key == b.Key && a.Alt == b.Alt && a.Shift == b.Shift && a.Ctrl == b.Ctrl;
-        }
-
-        public static bool operator !=(KeyExt a, KeyExt b)
-        {
-            return !(a == b);
-        }
-
-        public override bool Equals(object other)
-        {
-            KeyExt otherKeyExt = other as KeyExt;
-            return otherKeyExt != null && this == otherKeyExt;
-        }
-
-        public override int GetHashCode()
-        {
-            return (int)ConvertToKeys();
-        }
-
         public Keys ConvertToKeys()
         {
             Keys key = Key;
@@ -74,20 +54,48 @@ namespace KeyboardWatcher
             return key;
         }
 
-        public bool Equals(KeyExt x, KeyExt y)
-        {
-            return x == y;
-        }
-
-        public int GetHashCode(KeyExt obj)
-        {
-            return obj.GetHashCode();
-        }
-
         public override string ToString()
         {
             return keysConverter.ConvertToInvariantString(ConvertToKeys());
         }
+        
 
+        #region IEquatable<KeyExt>
+
+        public bool Equals(KeyExt other)
+        {
+            if (ReferenceEquals(this, other))
+                return true;
+            if (other is null)
+                return false;
+            return Key == other.Key && Alt == other.Alt && Shift == other.Shift && Ctrl == other.Ctrl;
+        }
+
+        public override bool Equals(object other)
+        {
+            return Equals(other as KeyExt);
+        }
+
+        public static bool operator ==(KeyExt a, KeyExt b)
+        {
+            if (a is null)
+            {
+                return b is null;
+            }
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(KeyExt a, KeyExt b)
+        {
+            return !(a == b);
+        }
+
+        public override int GetHashCode()
+        {
+            return (int)ConvertToKeys();
+        }
+        
+        #endregion
+        
     }
 }

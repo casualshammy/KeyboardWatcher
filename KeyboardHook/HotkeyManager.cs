@@ -11,8 +11,8 @@ namespace KeyboardWatcher
     {
         private static readonly System.Timers.Timer _timer = new System.Timers.Timer(50);
         private static KeyExt[] _uniqKeys;
-        private static readonly object _locker = new object();
-        private static int _intLocker;
+        private static readonly object _addRemoveKeysLocker = new object();
+        private static volatile int _intLocker;
         private static readonly Dictionary<string, KeyExt[]> KeysSets = new Dictionary<string, KeyExt[]>();
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace KeyboardWatcher
         /// <param name="keysToHandle">Set of Keys to listen to</param>
         public static void AddKeys(string id, params KeyExt[] keysToHandle)
         {
-            lock (_locker)
+            lock (_addRemoveKeysLocker)
             {
                 if (string.IsNullOrWhiteSpace(id))
                 {
@@ -64,7 +64,7 @@ namespace KeyboardWatcher
         /// <returns>True if identifier is present, false otherwise</returns>
         public static bool RemoveKeys(string id)
         {
-            lock (_locker)
+            lock (_addRemoveKeysLocker)
             {
                 if (KeysSets.ContainsKey(id))
                 {
@@ -100,6 +100,10 @@ namespace KeyboardWatcher
 
         private static void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
         {
+            while (_intLocker != 0)
+            {
+                Thread.Sleep(1);
+            }
             Interlocked.Increment(ref _intLocker);
             try
             {
