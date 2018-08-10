@@ -75,10 +75,7 @@ namespace KeyboardWatcher
                     }
                     KeysSets.Remove(id);
                     RebuildUniqueKeys();
-                    if (_uniqKeys.Length != 0)
-                    {
-                        _timer.Enabled = true;
-                    }
+                    _timer.Enabled = _uniqKeys.Length != 0;
                     return true;
                 }
                 return false;
@@ -100,10 +97,12 @@ namespace KeyboardWatcher
 
         private static void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
         {
-            while (_intLocker != 0)
-            {
-                Thread.Sleep(1);
-            }
+            if (_intLocker != 0)
+                return;
+            //while (_intLocker != 0)
+            //{
+            //    Thread.Sleep(1);
+            //}
             Interlocked.Increment(ref _intLocker);
             try
             {
