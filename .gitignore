@@ -1,3 +1,4 @@
-v15
-Release
-Debug
+/KeyboardWatcher/bin/Release
+/KeyboardWatcher/obj
+/.vs/KeyboardWatcher/v16/*.suo
+/.vs/KeyboardWatcher/DesignTimeBuild/.dtbcache.v2

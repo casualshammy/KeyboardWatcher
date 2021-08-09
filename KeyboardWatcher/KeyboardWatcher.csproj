@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <PackageId>KeyboardWatcher</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>CPU lightweight library for tracking keyboard input.
+Based on GetAsyncKeyState, no hooks included.</Description>
+    <Version>1.0.0</Version>
+    <Authors>Axio</Authors>
+    <Company>Axio.Lab</Company>
+    <LangVersion>latest</LangVersion>
+    <PackageProjectUrl>https://github.com/casualshammy/KeyboardWatcher</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/casualshammy/KeyboardWatcher</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ax.Fw.Windows" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
+</Project>
