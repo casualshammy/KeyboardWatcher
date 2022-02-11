@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
 
-namespace KeyboardWatcher
+namespace KeyboardWatcher.Data
 {
     [DataContract]
     public class KeyExt : IEquatable<KeyExt>
@@ -26,7 +25,7 @@ namespace KeyboardWatcher
 
         [DataMember(Name = "Ctrl")]
         public readonly bool Ctrl;
-        
+
         public KeyExt(Keys key, bool alt = false, bool shift = false, bool ctrl = false)
         {
             Key = key & ~Keys.Control & ~Keys.Shift & ~Keys.Alt;
@@ -58,17 +57,17 @@ namespace KeyboardWatcher
         {
             return p_keysConverter.ConvertToInvariantString(ConvertToKeys());
         }
-        
+
 
         #region IEquatable<KeyExt>
 
-        public bool Equals(KeyExt other)
+        public bool Equals(KeyExt _other)
         {
-            if (ReferenceEquals(this, other))
+            if (ReferenceEquals(this, _other))
                 return true;
-            if (other is null)
+            if (_other is null)
                 return false;
-            return Key == other.Key && Alt == other.Alt && Shift == other.Shift && Ctrl == other.Ctrl;
+            return Key == _other.Key && Alt == _other.Alt && Shift == _other.Shift && Ctrl == _other.Ctrl;
         }
 
         public override bool Equals(object other)
@@ -94,8 +93,8 @@ namespace KeyboardWatcher
         {
             return (int)ConvertToKeys();
         }
-        
+
         #endregion
-        
+
     }
 }
