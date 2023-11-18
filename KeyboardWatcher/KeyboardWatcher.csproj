@@ -1,24 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net472;net5.0-windows7.0</TargetFrameworks>
-    <PackageId>KeyboardWatcher</PackageId>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Description>CPU lightweight library for tracking keyboard input.
-Based on GetAsyncKeyState, no hooks included.</Description>
-    <Version>1.0.0</Version>
-    <Authors>Axio</Authors>
-    <Company>Axio.Lab</Company>
-    <LangVersion>latest</LangVersion>
-    <PackageProjectUrl>https://github.com/casualshammy/KeyboardWatcher</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/casualshammy/KeyboardWatcher</RepositoryUrl>
-	<UseWindowsForms>true</UseWindowsForms>
-  </PropertyGroup>
+		<PropertyGroup>
+				<TargetFramework>net6.0-windows7.0</TargetFramework>
+				<PackageId>KeyboardWatcher</PackageId>
+				<PackageLicenseExpression>MIT</PackageLicenseExpression>
+				<Description>
+						CPU lightweight library for tracking keyboard input.
+						Based on GetAsyncKeyState, no hooks included.
+				</Description>
+				<Version>1.0.0</Version>
+				<Authors>Axio</Authors>
+				<Company>Axio.Lab</Company>
+				<LangVersion>latest</LangVersion>
+				<PackageProjectUrl>https://github.com/casualshammy/KeyboardWatcher</PackageProjectUrl>
+				<RepositoryUrl>https://github.com/casualshammy/KeyboardWatcher</RepositoryUrl>
+				<UseWindowsForms>true</UseWindowsForms>
+				<Nullable>enable</Nullable>
+		</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Ax.Fw.Windows" Version="5.0.9" />
-    <PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
-    <PackageReference Include="System.Reactive" Version="5.0.0" />
-  </ItemGroup>
+		<ItemGroup>
+				<PackageReference Include="Ax.Fw.Windows" Version="13.0.181" />
+				<PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
+		</ItemGroup>
 
 </Project>
