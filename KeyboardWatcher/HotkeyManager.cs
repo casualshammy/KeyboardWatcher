@@ -16,7 +16,7 @@ public static class HotkeyManager
   private static readonly object p_addRemoveKeysLocker = new();
   private static volatile int p_intLocker;
   private static readonly Dictionary<string, KeyExt[]> p_keysSets = [];
-  private static readonly Dictionary<KeyExt, long?> p_lastPressed = [];
+  private static readonly Dictionary<Keys, long?> p_lastPressed = [];
 
   /// <summary>
   ///     ATTENTION!
@@ -84,7 +84,7 @@ public static class HotkeyManager
   {
     var list = new List<KeyExt>();
     foreach (var keyInfo in p_keysSets.Values.SelectMany(_keys => _keys))
-      if (!list.Any(l => l.Key == keyInfo.Key))
+      if (!list.Any(_l => _l.Key == keyInfo.Key))
         list.Add(keyInfo);
 
     p_uniqKeys = [.. list];
@@ -104,19 +104,20 @@ public static class HotkeyManager
       var ctrlPressed = (NativeMethods.GetAsyncKeyState(Keys.ControlKey) & 0x8000) != 0;
       foreach (var keyExt in p_uniqKeys)
       {
-        var keyPressed = (NativeMethods.GetAsyncKeyState(keyExt.Key) & 0x8000) != 0;
+        var key = keyExt.Key;
+        var keyPressed = (NativeMethods.GetAsyncKeyState(key) & 0x8000) != 0;
         if (keyPressed)
         {
-          var lastPressedMs = p_lastPressed.GetValueOrDefault(keyExt);
+          var lastPressedMs = p_lastPressed.GetValueOrDefault(key);
           if (lastPressedMs == null || ticksMs - lastPressedMs.Value >= 500)
-            KeyPressed?.Invoke(new KeyExt(keyExt.Key, altPressed, shiftPressed, ctrlPressed));
+            KeyPressed?.Invoke(new KeyExt(key, shiftPressed, altPressed, ctrlPressed));
 
           if (lastPressedMs == null)
-            p_lastPressed[keyExt] = ticksMs;
+            p_lastPressed[key] = ticksMs;
         }
         else
         {
-          p_lastPressed[keyExt] = null;
+          p_lastPressed[key] = null;
         }
       }
     }

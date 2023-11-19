@@ -4,7 +4,7 @@ namespace KeyboardWatcher.Data;
 
 public readonly record struct KeyExt(Keys Key, bool Shift, bool Alt, bool Ctrl)
 {
-  private static KeysConverter p_keysConverter = new();
+  private static readonly KeysConverter p_keysConverter = new();
 
   public Keys ConvertToKeys()
   {
